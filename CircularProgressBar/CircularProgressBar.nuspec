@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>CircularProgressBar</id>
+    <version>1.0.0.0</version>
+    <title>Circular Progressbar for Winform</title>
+    <authors>Soroush Falahati</authors>
+    <owners>Soroush Falahati</owners>
+    <licenseUrl>https://github.com/falahati/CircularProgress/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/falahati/CircularProgress</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A Simple Circular Progressbar for Winform with Animation</description>
+    <dependencies>
+      <dependency id="WinFormAnimation" version="1.0.0.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\CircularProgressBar.dll" target="lib\net35\CircularProgressBar.dll" />
+    <file src="bin\Release\CircularProgressBar.dll" target="lib\net40\CircularProgressBar.dll" />
+    <file src="bin\Release\CircularProgressBar.dll" target="lib\net45\CircularProgressBar.dll" />
+  </files>
+</package>
