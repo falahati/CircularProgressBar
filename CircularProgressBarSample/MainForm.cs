@@ -6,16 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Demo
+namespace CircularProgressBarSample
 {
-    public partial class frm_Main : Form
+    public partial class MainForm : Form
     {
-        public frm_Main()
+        public MainForm()
         {
             InitializeComponent();
         }
 
-        private void frm_Main_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
 
         }

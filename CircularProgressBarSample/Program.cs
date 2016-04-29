@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Demo
+namespace CircularProgressBarSample
 {
     static class Program
     {
@@ -15,7 +15,7 @@ namespace Demo
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frm_Main());
+            Application.Run(new MainForm());
         }
     }
 }

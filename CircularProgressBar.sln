@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CircularProgressBar", "CircularProgressBar\CircularProgressBar.csproj", "{8B31ED1C-81D5-4777-9BE9-A269D46543FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", "{ECBFEE0A-70C4-42A9-BE9C-F335E4F29880}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CircularProgressBarSample", "CircularProgressBarSample\CircularProgressBarSample.csproj", "{ECBFEE0A-70C4-42A9-BE9C-F335E4F29880}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
