@@ -1,23 +1,48 @@
-CircularProgress
-================
+# Circular ProgressBar for WinForm [.Net3.5+]
+Circular ProgressBar is a custom control for WinForm with animation.
 
-Circular Progress Bar for .Net WinForm
+### WHERE TO FIND
+This library is available as a NuGet package at [nuget.org](https://www.nuget.org/packages/CircularProgressBar/).
 
-https://www.nuget.org/packages/CircularProgressBar/
 
-License
-=============
-Copyright (C) 2013 Soroush Falahati - soroush@falahati.net
+### HOW TO USE
+Use toolbox to add the control to your forms.
 
-This library is free software; you can redistribute it and/or
-modify it under the terms of the GNU Lesser General Public
-License as published by the Free Software Foundation; either
-version 2.1 of the License, or (at your option) any later version.
+Check the 'CircularProgressBarSample' project for tons of usage examples.
+![Screenshot](/screenshot.gif?raw=true "Screenshot")
 
-This library is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-Lesser General Public License for more details.
+### MEMBERS
+#####[Properties]
+
+* `CircularProgressBar.Maximum`: Shows and changes the maximum acceptable value for the progress bar.
+* `CircularProgressBar.Minimum`: Shows and changes the minimum acceptable value for the progress bar.
+* `CircularProgressBar.Value`: Shows and changes the current value of the progress bar.
+* `CircularProgressBar.Style`: Shows and changes the style of the progress bar. Only `Continues` and `Marquee` is now supported. `Blocks` behaves as same as `Continues`.
+* `CircularProgressBar.BackColor`: Background color of control, transparent is not supported
+* `CircularProgressBar.Text`: Primary text
+* `CircularProgressBar.TextMargin`: Margin of the primary text
+* `CircularProgressBar.Font`: Font of the primary text
+* `CircularProgressBar.SuperscriptText`: Superscript text
+* `CircularProgressBar.SuperscriptMargin`: Margin of the superscript text
+* `CircularProgressBar.SuperscriptColor`: Font color of the superscript text
+* `CircularProgressBar.SubscriptText`: Subscript text
+* `CircularProgressBar.SubscriptMargin`: Margin of the subscript text
+* `CircularProgressBar.SubscriptColor`: Font color of the subscript text
+* `CircularProgressBar.SecondaryFont`: Font of subscript as superscript text
+* `CircularProgressBar.AnimationFunction`: Contains the function that controls the animation. Use `WinFormAnimation.Functions` namespace for some of the basic implementations.
+* `CircularProgressBar.AnimationSpeed`: Speed of the animation. Applies to the main progress animation.
+* `CircularProgressBar.StartAngle`: Start angle of the progress bar. 270 being top of the control.
+* `CircularProgressBar.InnerColor`: Color of the inner circle.
+* `CircularProgressBar.InnerWidth`: Width of the inner circle. -1 means full fill.
+* `CircularProgressBar.InnerMargin`: Margin of the inner circle.
+* `CircularProgressBar.ProgressWidth`: Width of the main progress bar circle. -1 means full fill.
+* `CircularProgressBar.ProgressColor`: Color of the main progress bar circle.
+* `CircularProgressBar.OuterColor`: Color of the outer circle.
+* `CircularProgressBar.OuterWidth`: Width of the outer circle. -1 means full fill.
+* `CircularProgressBar.OuterMargin`: Margin of the outer circle.
+
+
+### LICENSE
 The MIT License (MIT)
 
 Copyright (c) 2016 Soroush Falahati
