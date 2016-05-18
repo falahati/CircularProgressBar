@@ -31,7 +31,7 @@ namespace CircularProgressBar
         public CircularProgressBar()
         {
             _lastValue = Value;
-            
+
             DoubleBuffered = true;
             AnimationFunction = Functions.CubicEaseIn;
             AnimationSpeed = 500;
@@ -52,11 +52,11 @@ namespace CircularProgressBar
             InnerWidth = -1;
             InnerColor = Color.FromArgb(224, 224, 224);
 
-            TextMargin = new Padding(8, 8, 0,0);
+            TextMargin = new Padding(8, 8, 0, 0);
             Value = 68;
 
             SuperscriptMargin = new Padding(10, 35, 0, 0);
-            SuperscriptColor = Color.FromArgb(166,166,166);
+            SuperscriptColor = Color.FromArgb(166, 166, 166);
             SuperscriptText = "°C";
 
             SubscriptMargin = new Padding(10, -35, 0, 0);
@@ -116,7 +116,7 @@ namespace CircularProgressBar
         }
 
         /// <summary>
-        /// Gets or sets the text in the <see cref="CircularProgressBar" />.
+        ///     Gets or sets the text in the <see cref="CircularProgressBar" />.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Always)]
         [Browsable(true)]
@@ -138,7 +138,7 @@ namespace CircularProgressBar
         /// </summary>
         [Category("Behavior")]
         public int AnimationSpeed { get; set; }
-        
+
         /// <summary>
         /// </summary>
         [Category("Layout")]
@@ -306,11 +306,11 @@ namespace CircularProgressBar
             g.SmoothingMode = SmoothingMode.AntiAlias;
             var point = AddPoint(Point.Empty, 2);
             var size = AddSize(Size, -2*2);
-            if (OuterWidth + OuterMargin  < 0)
+            if (OuterWidth + OuterMargin < 0)
             {
                 var offset = Math.Abs(OuterWidth + OuterMargin);
                 point = AddPoint(Point.Empty, offset);
-                size = AddSize(Size, -2 * offset);
+                size = AddSize(Size, -2*offset);
             }
             Brush backBrush = new SolidBrush(base.BackColor);
             if (OuterColor != Color.Empty && OuterColor != Color.Transparent && OuterWidth != 0)
@@ -325,7 +325,7 @@ namespace CircularProgressBar
             }
 
             point = AddPoint(point, OuterMargin);
-            size = AddSize(size, -2* OuterMargin);
+            size = AddSize(size, -2*OuterMargin);
 
             g.FillPie(
                 new SolidBrush(ProgressColor),
@@ -359,11 +359,12 @@ namespace CircularProgressBar
                 point.Y += TextMargin.Top;
                 size.Width -= TextMargin.Right;
                 size.Height -= TextMargin.Bottom;
-                var stringFormat = new StringFormat(RightToLeft == RightToLeft.Yes ? StringFormatFlags.DirectionRightToLeft : 0)
-                {
-                    Alignment = StringAlignment.Center,
-                    LineAlignment = StringAlignment.Near
-                };
+                var stringFormat =
+                    new StringFormat(RightToLeft == RightToLeft.Yes ? StringFormatFlags.DirectionRightToLeft : 0)
+                    {
+                        Alignment = StringAlignment.Center,
+                        LineAlignment = StringAlignment.Near
+                    };
                 var textSize = g.MeasureString(Text, Font);
                 var textPoint = new PointF(
                     point.X + ((size.Width - textSize.Width)/2),
