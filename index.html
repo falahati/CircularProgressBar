@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Circular ProgressBar for WinForm [.Net3.5+] by falahati</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Circular ProgressBar for WinForm [.Net3.5+]</h1>
+      <h2 class="project-tagline">Circular ProgressBar is a custom control for WinForm with animation.</h2>
+      <a href="https://github.com/falahati/CircularProgress" class="btn">View on GitHub</a>
+      <a href="https://github.com/falahati/CircularProgress/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/falahati/CircularProgress/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="-circular-progressbar-for-winform-net35" class="anchor" href="#-circular-progressbar-for-winform-net35" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><img src="https://github.com/falahati/CircularProgress/blob/master/CircularProgressBar/Icon.png?raw=true" width="42" alt="Icon"> Circular ProgressBar for WinForm [.Net3.5+]</h1>
+
+<p>Circular ProgressBar is a custom control for WinForm with animation.</p>
+
+<h3>
+<a id="where-to-find" class="anchor" href="#where-to-find" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>WHERE TO FIND</h3>
+
+<p>This library is available as a NuGet package at <a href="https://www.nuget.org/packages/CircularProgressBar/">nuget.org</a>.</p>
+
+<h3>
+<a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>HOW TO USE</h3>
+
+<p>Use toolbox to add the control to your forms.</p>
+
+<p>Check the 'CircularProgressBarSample' project for tons of usage examples.
+<img src="https://github.com/falahati/CircularProgress/blob/master/screenshot.gif?raw=true" alt="Screenshot" title="Screenshot"></p>
+
+<h3>
+<a id="members" class="anchor" href="#members" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MEMBERS</h3>
+
+<h5>
+<a id="properties" class="anchor" href="#properties" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[Properties]</h5>
+
+<ul>
+<li>
+<code>CircularProgressBar.Maximum</code>: Shows and changes the maximum acceptable value for the progress bar.</li>
+<li>
+<code>CircularProgressBar.Minimum</code>: Shows and changes the minimum acceptable value for the progress bar.</li>
+<li>
+<code>CircularProgressBar.Value</code>: Shows and changes the current value of the progress bar.</li>
+<li>
+<code>CircularProgressBar.Style</code>: Shows and changes the style of the progress bar. Only <code>Continues</code> and <code>Marquee</code> is now supported. <code>Blocks</code> behaves as same as <code>Continues</code>.</li>
+<li>
+<code>CircularProgressBar.BackColor</code>: Background color of control, transparent is not supported</li>
+<li>
+<code>CircularProgressBar.Text</code>: Primary text</li>
+<li>
+<code>CircularProgressBar.TextMargin</code>: Margin of the primary text</li>
+<li>
+<code>CircularProgressBar.Font</code>: Font of the primary text</li>
+<li>
+<code>CircularProgressBar.SuperscriptText</code>: Superscript text</li>
+<li>
+<code>CircularProgressBar.SuperscriptMargin</code>: Margin of the superscript text</li>
+<li>
+<code>CircularProgressBar.SuperscriptColor</code>: Font color of the superscript text</li>
+<li>
+<code>CircularProgressBar.SubscriptText</code>: Subscript text</li>
+<li>
+<code>CircularProgressBar.SubscriptMargin</code>: Margin of the subscript text</li>
+<li>
+<code>CircularProgressBar.SubscriptColor</code>: Font color of the subscript text</li>
+<li>
+<code>CircularProgressBar.SecondaryFont</code>: Font of subscript as superscript text</li>
+<li>
+<code>CircularProgressBar.AnimationFunction</code>: Contains the function that controls the animation. Use <code>WinFormAnimation.Functions</code> namespace for some of the basic implementations.</li>
+<li>
+<code>CircularProgressBar.AnimationSpeed</code>: Speed of the animation. Applies to the main progress animation.</li>
+<li>
+<code>CircularProgressBar.StartAngle</code>: Start angle of the progress bar. 270 being top of the control.</li>
+<li>
+<code>CircularProgressBar.InnerColor</code>: Color of the inner circle.</li>
+<li>
+<code>CircularProgressBar.InnerWidth</code>: Width of the inner circle. -1 means full fill.</li>
+<li>
+<code>CircularProgressBar.InnerMargin</code>: Margin of the inner circle.</li>
+<li>
+<code>CircularProgressBar.ProgressWidth</code>: Width of the main progress bar circle. -1 means full fill.</li>
+<li>
+<code>CircularProgressBar.ProgressColor</code>: Color of the main progress bar circle.</li>
+<li>
+<code>CircularProgressBar.OuterColor</code>: Color of the outer circle.</li>
+<li>
+<code>CircularProgressBar.OuterWidth</code>: Width of the outer circle. -1 means full fill.</li>
+<li>
+<code>CircularProgressBar.OuterMargin</code>: Margin of the outer circle.</li>
+</ul>
+
+<h3>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>LICENSE</h3>
+
+<p>The MIT License (MIT)</p>
+
+<p>Copyright (c) 2016 Soroush Falahati</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/falahati/CircularProgress">Circular ProgressBar for WinForm [.Net3.5+]</a> is maintained by <a href="https://github.com/falahati">falahati</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
