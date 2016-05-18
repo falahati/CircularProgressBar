@@ -32,14 +32,19 @@ namespace CircularProgressBar
         {
             _lastValue = Value;
 
-            DoubleBuffered = true;
             AnimationFunction = AnimationFunctions.CubicEaseIn;
             AnimationSpeed = 500;
             MarqueeAnimationSpeed = 2000;
             StartAngle = 270;
 
+            // Child class should be responsible for handling this values at the constructor
+            // ReSharper disable DoNotCallOverridableMethodsInConstructor
             BackColor = Color.White;
             ForeColor = Color.FromArgb(64, 64, 64);
+            DoubleBuffered = true;
+            Font = new Font(Font.FontFamily, 72, FontStyle.Bold);
+            SecondaryFont = new Font(Font.FontFamily, (float) (Font.Size*.5), FontStyle.Regular);
+            // ReSharper restore DoNotCallOverridableMethodsInConstructor
 
             OuterMargin = -25;
             OuterWidth = 26;
@@ -65,8 +70,6 @@ namespace CircularProgressBar
 
             Size = new Size(320, 320);
 
-            Font = new Font(Font.FontFamily, 72, FontStyle.Bold);
-            SecondaryFont = new Font(Font.FontFamily, (float) (Font.Size*.5), FontStyle.Regular);
 
             SetStyle(
                 ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer |
