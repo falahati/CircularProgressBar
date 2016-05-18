@@ -33,7 +33,7 @@ namespace CircularProgressBar
             _lastValue = Value;
 
             DoubleBuffered = true;
-            AnimationFunction = Functions.CubicEaseIn;
+            AnimationFunction = AnimationFunctions.CubicEaseIn;
             AnimationSpeed = 500;
             MarqueeAnimationSpeed = 2000;
             StartAngle = 270;
@@ -131,7 +131,7 @@ namespace CircularProgressBar
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Browsable(false)]
-        public Functions.Function AnimationFunction { get; set; }
+        public AnimationFunctions.Function AnimationFunction { get; set; }
 
         /// <summary>
         ///     Gets or sets the animation speed in milliseconds.
@@ -265,11 +265,11 @@ namespace CircularProgressBar
                 }
 
                 _animator.Stop();
-                _animator.SetPaths(new Path(_animatedValue ?? Value, Value, AnimationSpeed));
+                _animator.Paths = new Path(_animatedValue ?? Value, Value, AnimationSpeed).ToArray();
                 _animator.Repeat = false;
                 _animatedStartAngle = null;
                 _animator.Play(
-                    new SafeInvoker(
+                    new SafeInvoker<float>(
                         v =>
                         {
                             _animatedValue = v;
@@ -285,11 +285,11 @@ namespace CircularProgressBar
                 (_animator.ActivePath != null && Math.Abs(_animator.ActivePath.Duration - MarqueeAnimationSpeed) > 0.9))
             {
                 _animator.Stop();
-                _animator.SetPaths(new Path(0, 359, MarqueeAnimationSpeed));
+                _animator.Paths = new Path(0, 359, MarqueeAnimationSpeed).ToArray();
                 _animator.Repeat = true;
                 _animatedValue = null;
                 _animator.Play(
-                    new SafeInvoker(
+                    new SafeInvoker<float>(
                         v =>
                         {
                             _animatedStartAngle = (int) v;
