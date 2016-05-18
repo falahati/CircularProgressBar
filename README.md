@@ -1,4 +1,4 @@
-# Circular ProgressBar for WinForm [.Net3.5+]
+# <img src="CircularProgressBar/Icon.png" width="42" alt="Icon"> Circular ProgressBar for WinForm [.Net3.5+]
 Circular ProgressBar is a custom control for WinForm with animation.
 
 ### WHERE TO FIND
