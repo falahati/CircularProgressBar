@@ -11,7 +11,7 @@ namespace CircularProgressBar
     /// <summary>
     ///     The circular progress bar windows form control
     /// </summary>
-    public sealed class CircularProgressBar : ProgressBar
+    public class CircularProgressBar : ProgressBar
     {
         private static readonly bool IsInDesignMode = LicenseManager.UsageMode == LicenseUsageMode.Designtime;
 
