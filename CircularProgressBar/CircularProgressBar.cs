@@ -268,7 +268,7 @@ namespace CircularProgressBar
                 }
 
                 _animator.Stop();
-                _animator.Paths = new Path(_animatedValue ?? Value, Value, AnimationSpeed).ToArray();
+                _animator.Paths = new Path(_animatedValue ?? Value, Value, (ulong) AnimationSpeed).ToArray();
                 _animator.Repeat = false;
                 _animatedStartAngle = null;
                 _animator.Play(
@@ -285,10 +285,10 @@ namespace CircularProgressBar
         private void InitializeMarquee(bool firstTime)
         {
             if (firstTime ||
-                (_animator.ActivePath != null && Math.Abs(_animator.ActivePath.Duration - MarqueeAnimationSpeed) > 0.9))
+                (_animator.ActivePath != null && _animator.ActivePath.Duration != (ulong) MarqueeAnimationSpeed))
             {
                 _animator.Stop();
-                _animator.Paths = new Path(0, 359, MarqueeAnimationSpeed).ToArray();
+                _animator.Paths = new Path(0, 359, (ulong) MarqueeAnimationSpeed).ToArray();
                 _animator.Repeat = true;
                 _animatedValue = null;
                 _animator.Play(
