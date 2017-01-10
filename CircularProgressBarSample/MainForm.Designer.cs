@@ -1,4 +1,6 @@
-﻿namespace CircularProgressBarSample
+﻿using System.Drawing;
+
+namespace CircularProgressBarSample
 {
     partial class MainForm
     {
@@ -42,8 +44,9 @@
             // circularProgressBar4
             // 
             this.circularProgressBar4.AnimationFunction = ((WinFormAnimation.AnimationFunctions.Function)(resources.GetObject("circularProgressBar4.AnimationFunction")));
+            this.circularProgressBar4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.circularProgressBar4.AnimationSpeed = 500;
-            this.circularProgressBar4.BackColor = System.Drawing.Color.White;
+            this.circularProgressBar4.BackColor = System.Drawing.Color.Transparent;
             this.circularProgressBar4.Font = new System.Drawing.Font("Arial", 72F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.circularProgressBar4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.circularProgressBar4.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(215)))), ((int)(((byte)(158)))));
@@ -74,8 +77,9 @@
             // circularProgressBar5
             // 
             this.circularProgressBar5.AnimationFunction = ((WinFormAnimation.AnimationFunctions.Function)(resources.GetObject("circularProgressBar5.AnimationFunction")));
+            this.circularProgressBar5.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.circularProgressBar5.AnimationSpeed = 500;
-            this.circularProgressBar5.BackColor = System.Drawing.Color.White;
+            this.circularProgressBar5.BackColor = System.Drawing.Color.Transparent;
             this.circularProgressBar5.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.circularProgressBar5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.circularProgressBar5.InnerColor = System.Drawing.Color.White;
@@ -107,8 +111,9 @@
             // circularProgressBar6
             // 
             this.circularProgressBar6.AnimationFunction = ((WinFormAnimation.AnimationFunctions.Function)(resources.GetObject("circularProgressBar6.AnimationFunction")));
+            this.circularProgressBar6.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.circularProgressBar6.AnimationSpeed = 500;
-            this.circularProgressBar6.BackColor = System.Drawing.Color.White;
+            this.circularProgressBar6.BackColor = System.Drawing.Color.Transparent;
             this.circularProgressBar6.Font = new System.Drawing.Font("Arial", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.circularProgressBar6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(99)))), ((int)(((byte)(180)))));
             this.circularProgressBar6.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
@@ -139,8 +144,9 @@
             // circularProgressBar3
             // 
             this.circularProgressBar3.AnimationFunction = ((WinFormAnimation.AnimationFunctions.Function)(resources.GetObject("circularProgressBar3.AnimationFunction")));
+            this.circularProgressBar3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.circularProgressBar3.AnimationSpeed = 500;
-            this.circularProgressBar3.BackColor = System.Drawing.Color.White;
+            this.circularProgressBar3.BackColor = System.Drawing.Color.Transparent;
             this.circularProgressBar3.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold);
             this.circularProgressBar3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.circularProgressBar3.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(57)))), ((int)(((byte)(3)))));
@@ -171,8 +177,9 @@
             // circularProgressBar2
             // 
             this.circularProgressBar2.AnimationFunction = ((WinFormAnimation.AnimationFunctions.Function)(resources.GetObject("circularProgressBar2.AnimationFunction")));
+            this.circularProgressBar2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.circularProgressBar2.AnimationSpeed = 500;
-            this.circularProgressBar2.BackColor = System.Drawing.Color.White;
+            this.circularProgressBar2.BackColor = System.Drawing.Color.Transparent;
             this.circularProgressBar2.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold);
             this.circularProgressBar2.ForeColor = System.Drawing.Color.Gray;
             this.circularProgressBar2.InnerColor = System.Drawing.Color.White;
@@ -204,8 +211,9 @@
             // circularProgressBar1
             // 
             this.circularProgressBar1.AnimationFunction = ((WinFormAnimation.AnimationFunctions.Function)(resources.GetObject("circularProgressBar1.AnimationFunction")));
+            this.circularProgressBar1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.circularProgressBar1.AnimationSpeed = 500;
-            this.circularProgressBar1.BackColor = System.Drawing.Color.White;
+            this.circularProgressBar1.BackColor = System.Drawing.Color.Transparent;
             this.circularProgressBar1.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.circularProgressBar1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.circularProgressBar1.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
@@ -235,6 +243,7 @@
             // 
             // propertyGrid1
             // 
+            this.propertyGrid1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.propertyGrid1.Location = new System.Drawing.Point(350, 12);
             this.propertyGrid1.Name = "propertyGrid1";
             this.propertyGrid1.SelectedObject = this.circularProgressBar;
@@ -244,8 +253,9 @@
             // circularProgressBar
             // 
             this.circularProgressBar.AnimationFunction = ((WinFormAnimation.AnimationFunctions.Function)(resources.GetObject("circularProgressBar.AnimationFunction")));
+            this.circularProgressBar.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.circularProgressBar.AnimationSpeed = 500;
-            this.circularProgressBar.BackColor = System.Drawing.Color.White;
+            this.circularProgressBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
             this.circularProgressBar.Font = new System.Drawing.Font("Arial", 72F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.circularProgressBar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.circularProgressBar.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
@@ -277,7 +287,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(594, 725);
             this.Controls.Add(this.circularProgressBar4);
             this.Controls.Add(this.circularProgressBar5);
@@ -287,10 +298,8 @@
             this.Controls.Add(this.circularProgressBar1);
             this.Controls.Add(this.propertyGrid1);
             this.Controls.Add(this.circularProgressBar);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "MainForm";
             this.Text = "Circular ProgressBar Sample";
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
 
         }

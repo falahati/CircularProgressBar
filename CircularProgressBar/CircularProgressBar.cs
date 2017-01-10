@@ -13,13 +13,13 @@ namespace CircularProgressBar
     /// </summary>
     public class CircularProgressBar : ProgressBar
     {
-        private static readonly bool IsInDesignMode = LicenseManager.UsageMode == LicenseUsageMode.Designtime;
-
         private int? _animatedStartAngle;
 
         private float? _animatedValue;
 
-        private Animator _animator = new Animator();
+        private readonly Animator _animator;
+
+        private Brush _backBrush;
 
         private ProgressBarStyle? _lastStyle;
 
@@ -30,16 +30,24 @@ namespace CircularProgressBar
         /// </summary>
         public CircularProgressBar()
         {
-            _lastValue = Value;
+            SetStyle(
+                ControlStyles.SupportsTransparentBackColor |
+                ControlStyles.AllPaintingInWmPaint |
+                ControlStyles.UserPaint |
+                ControlStyles.OptimizedDoubleBuffer |
+                ControlStyles.ResizeRedraw, true);
 
+            _animator = DesignMode ? null : new Animator();
             AnimationFunction = AnimationFunctions.CubicEaseIn;
             AnimationSpeed = 500;
             MarqueeAnimationSpeed = 2000;
             StartAngle = 270;
 
+            _lastValue = Value;
+
             // Child class should be responsible for handling this values at the constructor
             // ReSharper disable DoNotCallOverridableMethodsInConstructor
-            BackColor = Color.White;
+            BackColor = Color.Transparent;
             ForeColor = Color.FromArgb(64, 64, 64);
             DoubleBuffered = true;
             Font = new Font(Font.FontFamily, 72, FontStyle.Bold);
@@ -69,39 +77,6 @@ namespace CircularProgressBar
             SubscriptText = ".23";
 
             Size = new Size(320, 320);
-
-
-            SetStyle(
-                ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer |
-                ControlStyles.ResizeRedraw, true);
-
-            Resize += (o, e) => Invalidate();
-            LocationChanged += (o, e) => Invalidate();
-            StyleChanged += (o, e) => Invalidate();
-        }
-
-        /// <summary>
-        ///     Gets or sets the background color of the control.
-        /// </summary>
-        /// <exception cref="ArgumentException">
-        ///     Transparent is not supported
-        /// </exception>
-        public override Color BackColor
-        {
-            get { return base.BackColor; }
-
-            set
-            {
-                if (value != Color.Empty && value != Color.Transparent)
-                {
-                    base.BackColor = value;
-                    Invalidate();
-                }
-                else
-                {
-                    throw new ArgumentException();
-                }
-            }
         }
 
         /// <summary>
@@ -228,6 +203,107 @@ namespace CircularProgressBar
         [Category("Appearance")]
         public Color SuperscriptColor { get; set; }
 
+        /// <inheritdoc />
+        protected override void OnLocationChanged(EventArgs e)
+        {
+            base.OnLocationChanged(e);
+            Invalidate();
+        }
+
+        /// <inheritdoc />
+        protected override void OnStyleChanged(EventArgs e)
+        {
+            base.OnStyleChanged(e);
+            Invalidate();
+        }
+
+        /// <inheritdoc />
+        protected override void OnParentChanged(EventArgs e)
+        {
+            if (Parent != null)
+            {
+                Parent.Invalidated -= ParentOnInvalidated;
+                Parent.Resize -= ParentOnResize;
+            }
+            base.OnParentChanged(e);
+            if (Parent != null)
+            {
+                Parent.Invalidated += ParentOnInvalidated;
+                Parent.Resize += ParentOnResize;
+            }
+        }
+
+        /// <summary>
+        ///     Occurs when parent's display requires redrawing.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="invalidateEventArgs"></param>
+        protected virtual void ParentOnInvalidated(object sender, InvalidateEventArgs invalidateEventArgs)
+        {
+            RecreateBackgroundBrush();
+        }
+
+        /// <summary>
+        ///     Occurs when the parent resized.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
+        protected virtual void ParentOnResize(object sender, EventArgs eventArgs)
+        {
+            RecreateBackgroundBrush();
+        }
+
+        /// <summary>
+        ///     Update or create the brush used for drawing the background
+        /// </summary>
+        protected virtual void RecreateBackgroundBrush()
+        {
+            lock (this)
+            {
+                _backBrush?.Dispose();
+                _backBrush = new SolidBrush(BackColor);
+                if (BackColor.A == 255)
+                {
+                    return;
+                }
+                if (Parent != null)
+                {
+                    using (var parentImage = new Bitmap(Parent.Width, Parent.Height))
+                    {
+                        using (var parentGraphic = Graphics.FromImage(parentImage))
+                        {
+                            var pe = new PaintEventArgs(parentGraphic, new Rectangle(new Point(0, 0), parentImage.Size));
+                            InvokePaintBackground(Parent, pe);
+                            InvokePaint(Parent, pe);
+
+                            if (BackColor.A > 0) // Translucent
+                            {
+                                parentGraphic.FillRectangle(_backBrush, Bounds);
+                            }
+                        }
+                        _backBrush = new TextureBrush(parentImage);
+                        ((TextureBrush) _backBrush).TranslateTransform(-Bounds.X, -Bounds.Y);
+                    }
+                }
+                else
+                {
+                    _backBrush = new SolidBrush(Color.FromArgb(255, BackColor));
+                }
+            }
+        }
+
+        /// <inheritdoc />
+        protected override void OnParentBackColorChanged(EventArgs e)
+        {
+            RecreateBackgroundBrush();
+        }
+
+        /// <inheritdoc />
+        protected override void OnParentBackgroundImageChanged(EventArgs e)
+        {
+            RecreateBackgroundBrush();
+        }
+
 
         /// <summary>
         ///     Raises the <see cref="E:System.Windows.Forms.Control.Paint" /> event.
@@ -237,7 +313,7 @@ namespace CircularProgressBar
         {
             try
             {
-                if (!IsInDesignMode)
+                if (!DesignMode)
                 {
                     if (Style == ProgressBarStyle.Marquee)
                     {
@@ -249,7 +325,11 @@ namespace CircularProgressBar
                     }
                     _lastStyle = Style;
                 }
-                StartPaint(e);
+                if (_backBrush == null)
+                {
+                    RecreateBackgroundBrush();
+                }
+                StartPaint(e.Graphics);
             }
             catch
             {
@@ -257,180 +337,217 @@ namespace CircularProgressBar
             }
         }
 
-        private void InitializeContinues(bool firstTime)
+        /// <summary>
+        ///     Initialize the animation for the continues styling
+        /// </summary>
+        /// <param name="firstTime">True if it is the first execution of this function, otherwise false</param>
+        protected virtual void InitializeContinues(bool firstTime)
         {
-            if (_lastValue != Value || firstTime)
+            if ((_lastValue == Value) && !firstTime)
             {
-                _lastValue = Value;
-                if (_animator == null)
-                {
-                    _animator = new Animator();
-                }
+                return;
+            }
 
-                _animator.Stop();
-                _animator.Paths = new Path(_animatedValue ?? Value, Value, (ulong) AnimationSpeed).ToArray();
-                _animator.Repeat = false;
-                _animatedStartAngle = null;
-                _animator.Play(
-                    new SafeInvoker<float>(
-                        v =>
+            _lastValue = Value;
+
+            _animator.Stop();
+            _animator.Paths = new Path(_animatedValue ?? Value, Value, (ulong) AnimationSpeed).ToArray();
+            _animator.Repeat = false;
+            _animatedStartAngle = null;
+            _animator.Play(
+                new SafeInvoker<float>(
+                    v =>
+                    {
+                        try
                         {
                             _animatedValue = v;
                             Invalidate();
-                        },
-                        this));
-            }
+                        }
+                        catch
+                        {
+                            _animator.Stop();
+                        }
+                    },
+                    this));
         }
 
-        private void InitializeMarquee(bool firstTime)
+        /// <summary>
+        ///     Initialize the animation for the marquee styling
+        /// </summary>
+        /// <param name="firstTime">True if it is the first execution of this function, otherwise false</param>
+        protected virtual void InitializeMarquee(bool firstTime)
         {
-            if (firstTime ||
-                (_animator.ActivePath != null && _animator.ActivePath.Duration != (ulong) MarqueeAnimationSpeed))
+            if (!firstTime &&
+                ((_animator.ActivePath == null) || (_animator.ActivePath.Duration == (ulong) MarqueeAnimationSpeed)))
             {
-                _animator.Stop();
-                _animator.Paths = new Path(0, 359, (ulong) MarqueeAnimationSpeed).ToArray();
-                _animator.Repeat = true;
-                _animatedValue = null;
-                _animator.Play(
-                    new SafeInvoker<float>(
-                        v =>
+                return;
+            }
+
+            _animator.Stop();
+            _animator.Paths = new Path(0, 359, (ulong) MarqueeAnimationSpeed).ToArray();
+            _animator.Repeat = true;
+            _animatedValue = null;
+            _animator.Play(
+                new SafeInvoker<float>(
+                    v =>
+                    {
+                        try
                         {
                             _animatedStartAngle = (int) v;
                             Invalidate();
-                        },
-                        this));
-            }
+                        }
+                        catch
+                        {
+                            _animator.Stop();
+                        }
+                    },
+                    this));
         }
 
-        private void StartPaint(PaintEventArgs e)
+        /// <summary>
+        ///     The function responsible for painting the control
+        /// </summary>
+        /// <param name="g">The <see cref="Graphics" /> object to draw into</param>
+        protected virtual void StartPaint(Graphics g)
         {
-            var g = e.Graphics;
-            g.TextRenderingHint = TextRenderingHint.AntiAlias;
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            var point = AddPoint(Point.Empty, 2);
-            var size = AddSize(Size, -2*2);
-            if (OuterWidth + OuterMargin < 0)
+            try
             {
-                var offset = Math.Abs(OuterWidth + OuterMargin);
-                point = AddPoint(Point.Empty, offset);
-                size = AddSize(Size, -2*offset);
-            }
-            Brush backBrush = new SolidBrush(base.BackColor);
-            if (OuterColor != Color.Empty && OuterColor != Color.Transparent && OuterWidth != 0)
-            {
-                g.FillEllipse(new SolidBrush(OuterColor), new RectangleF(point, size));
-                if (OuterWidth >= 0)
+                lock (this)
                 {
-                    point = AddPoint(point, OuterWidth);
-                    size = AddSize(size, -2*OuterWidth);
-                    g.FillEllipse(backBrush, new RectangleF(point, size));
+                    g.TextRenderingHint = TextRenderingHint.AntiAlias;
+                    g.SmoothingMode = SmoothingMode.AntiAlias;
+                    var point = AddPoint(Point.Empty, 2);
+                    var size = AddSize(Size, -2*2);
+                    if (OuterWidth + OuterMargin < 0)
+                    {
+                        var offset = Math.Abs(OuterWidth + OuterMargin);
+                        point = AddPoint(Point.Empty, offset);
+                        size = AddSize(Size, -2*offset);
+                    }
+
+                    if ((OuterColor != Color.Empty) && (OuterColor != Color.Transparent) && (OuterWidth != 0))
+                    {
+                        g.FillEllipse(new SolidBrush(OuterColor), new RectangleF(point, size));
+                        if (OuterWidth >= 0)
+                        {
+                            point = AddPoint(point, OuterWidth);
+                            size = AddSize(size, -2*OuterWidth);
+                            g.FillEllipse(_backBrush, new RectangleF(point, size));
+                        }
+                    }
+
+                    point = AddPoint(point, OuterMargin);
+                    size = AddSize(size, -2*OuterMargin);
+
+                    g.FillPie(
+                        new SolidBrush(ProgressColor),
+                        ToRectangle(new RectangleF(point, size)),
+                        _animatedStartAngle ?? StartAngle,
+                        (_animatedValue ?? Value)/(Maximum - Minimum)*360);
+                    if (ProgressWidth >= 0)
+                    {
+                        point = AddPoint(point, ProgressWidth);
+                        size = AddSize(size, -2*ProgressWidth);
+                        g.FillEllipse(_backBrush, new RectangleF(point, size));
+                    }
+
+                    point = AddPoint(point, InnerMargin);
+                    size = AddSize(size, -2*InnerMargin);
+
+                    if ((InnerColor != Color.Empty) && (InnerColor != Color.Transparent) && (InnerWidth != 0))
+                    {
+                        g.FillEllipse(new SolidBrush(InnerColor), new RectangleF(point, size));
+                        if (InnerWidth >= 0)
+                        {
+                            point = AddPoint(point, InnerWidth);
+                            size = AddSize(size, -2*InnerWidth);
+                            g.FillEllipse(_backBrush, new RectangleF(point, size));
+                        }
+                    }
+
+                    if (Text == string.Empty)
+                    {
+                        return;
+                    }
+
+                    point.X += TextMargin.Left;
+                    point.Y += TextMargin.Top;
+                    size.Width -= TextMargin.Right;
+                    size.Height -= TextMargin.Bottom;
+                    var stringFormat =
+                        new StringFormat(RightToLeft == RightToLeft.Yes ? StringFormatFlags.DirectionRightToLeft : 0)
+                        {
+                            Alignment = StringAlignment.Center,
+                            LineAlignment = StringAlignment.Near
+                        };
+                    var textSize = g.MeasureString(Text, Font);
+                    var textPoint = new PointF(
+                        point.X + (size.Width - textSize.Width)/2,
+                        point.Y + (size.Height - textSize.Height)/2);
+                    if ((SubscriptText != string.Empty) || (SuperscriptText != string.Empty))
+                    {
+                        float maxSWidth = 0;
+                        var supSize = SizeF.Empty;
+                        var subSize = SizeF.Empty;
+                        if (SuperscriptText != string.Empty)
+                        {
+                            supSize = g.MeasureString(SuperscriptText, SecondaryFont);
+                            maxSWidth = Math.Max(supSize.Width, maxSWidth);
+                            supSize.Width -= SuperscriptMargin.Right;
+                            supSize.Height -= SuperscriptMargin.Bottom;
+                        }
+
+                        if (SubscriptText != string.Empty)
+                        {
+                            subSize = g.MeasureString(SubscriptText, SecondaryFont);
+                            maxSWidth = Math.Max(subSize.Width, maxSWidth);
+                            subSize.Width -= SubscriptMargin.Right;
+                            subSize.Height -= SubscriptMargin.Bottom;
+                        }
+
+                        textPoint.X -= maxSWidth/4;
+                        if (SuperscriptText != string.Empty)
+                        {
+                            var supPoint = new PointF(
+                                textPoint.X + textSize.Width - supSize.Width/2,
+                                textPoint.Y - supSize.Height*0.85f);
+                            supPoint.X += SuperscriptMargin.Left;
+                            supPoint.Y += SuperscriptMargin.Top;
+                            g.DrawString(
+                                SuperscriptText,
+                                SecondaryFont,
+                                new SolidBrush(SuperscriptColor),
+                                new RectangleF(supPoint, supSize),
+                                stringFormat);
+                        }
+
+                        if (SubscriptText != string.Empty)
+                        {
+                            var subPoint = new PointF(
+                                textPoint.X + textSize.Width - subSize.Width/2,
+                                textPoint.Y + textSize.Height*0.85f);
+                            subPoint.X += SubscriptMargin.Left;
+                            subPoint.Y += SubscriptMargin.Top;
+                            g.DrawString(
+                                SubscriptText,
+                                SecondaryFont,
+                                new SolidBrush(SubscriptColor),
+                                new RectangleF(subPoint, subSize),
+                                stringFormat);
+                        }
+                    }
+
+                    g.DrawString(
+                        Text,
+                        Font,
+                        new SolidBrush(ForeColor),
+                        new RectangleF(textPoint, textSize),
+                        stringFormat);
                 }
             }
-
-            point = AddPoint(point, OuterMargin);
-            size = AddSize(size, -2*OuterMargin);
-
-            g.FillPie(
-                new SolidBrush(ProgressColor),
-                ToRectangle(new RectangleF(point, size)),
-                _animatedStartAngle ?? StartAngle,
-                ((_animatedValue ?? Value)/(Maximum - Minimum))*360);
-            if (ProgressWidth >= 0)
+            catch
             {
-                point = AddPoint(point, ProgressWidth);
-                size = AddSize(size, -2*ProgressWidth);
-                g.FillEllipse(backBrush, new RectangleF(point, size));
-            }
-
-            point = AddPoint(point, InnerMargin);
-            size = AddSize(size, -2*InnerMargin);
-
-            if (InnerColor != Color.Empty && InnerColor != Color.Transparent && InnerWidth != 0)
-            {
-                g.FillEllipse(new SolidBrush(InnerColor), new RectangleF(point, size));
-                if (InnerWidth >= 0)
-                {
-                    point = AddPoint(point, InnerWidth);
-                    size = AddSize(size, -2*InnerWidth);
-                    g.FillEllipse(backBrush, new RectangleF(point, size));
-                }
-            }
-
-            if (Text != string.Empty)
-            {
-                point.X += TextMargin.Left;
-                point.Y += TextMargin.Top;
-                size.Width -= TextMargin.Right;
-                size.Height -= TextMargin.Bottom;
-                var stringFormat =
-                    new StringFormat(RightToLeft == RightToLeft.Yes ? StringFormatFlags.DirectionRightToLeft : 0)
-                    {
-                        Alignment = StringAlignment.Center,
-                        LineAlignment = StringAlignment.Near
-                    };
-                var textSize = g.MeasureString(Text, Font);
-                var textPoint = new PointF(
-                    point.X + ((size.Width - textSize.Width)/2),
-                    point.Y + ((size.Height - textSize.Height)/2));
-                if (SubscriptText != string.Empty || SuperscriptText != string.Empty)
-                {
-                    float maxSWidth = 0;
-                    var supSize = SizeF.Empty;
-                    var subSize = SizeF.Empty;
-                    if (SuperscriptText != string.Empty)
-                    {
-                        supSize = g.MeasureString(SuperscriptText, SecondaryFont);
-                        maxSWidth = Math.Max(supSize.Width, maxSWidth);
-                        supSize.Width -= SuperscriptMargin.Right;
-                        supSize.Height -= SuperscriptMargin.Bottom;
-                    }
-
-                    if (SubscriptText != string.Empty)
-                    {
-                        subSize = g.MeasureString(SubscriptText, SecondaryFont);
-                        maxSWidth = Math.Max(subSize.Width, maxSWidth);
-                        subSize.Width -= SubscriptMargin.Right;
-                        subSize.Height -= SubscriptMargin.Bottom;
-                    }
-
-                    textPoint.X -= maxSWidth/4;
-                    if (SuperscriptText != string.Empty)
-                    {
-                        var supPoint = new PointF(
-                            textPoint.X + textSize.Width - (supSize.Width/2),
-                            textPoint.Y - (supSize.Height*0.85f));
-                        supPoint.X += SuperscriptMargin.Left;
-                        supPoint.Y += SuperscriptMargin.Top;
-                        g.DrawString(
-                            SuperscriptText,
-                            SecondaryFont,
-                            new SolidBrush(SuperscriptColor),
-                            new RectangleF(supPoint, supSize),
-                            stringFormat);
-                    }
-
-                    if (SubscriptText != string.Empty)
-                    {
-                        var subPoint = new PointF(
-                            textPoint.X + textSize.Width - (subSize.Width/2),
-                            textPoint.Y + (textSize.Height*0.85f));
-                        subPoint.X += SubscriptMargin.Left;
-                        subPoint.Y += SubscriptMargin.Top;
-                        g.DrawString(
-                            SubscriptText,
-                            SecondaryFont,
-                            new SolidBrush(SubscriptColor),
-                            new RectangleF(subPoint, subSize),
-                            stringFormat);
-                    }
-                }
-
-                g.DrawString(
-                    Text,
-                    Font,
-                    new SolidBrush(ForeColor),
-                    new RectangleF(textPoint, textSize),
-                    stringFormat);
+                // ignored
             }
         }
 
