@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using WinFormAnimation;
 
 namespace CircularProgressBarSample
 {
@@ -43,7 +44,7 @@ namespace CircularProgressBarSample
             // 
             // circularProgressBar4
             // 
-            this.circularProgressBar4.AnimationFunction = ((WinFormAnimation.AnimationFunctions.Function)(resources.GetObject("circularProgressBar4.AnimationFunction")));
+            this.circularProgressBar4.AnimationFunction = KnownAnimationFunctions.Liner;
             this.circularProgressBar4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.circularProgressBar4.AnimationSpeed = 500;
             this.circularProgressBar4.BackColor = System.Drawing.Color.Transparent;
@@ -76,7 +77,7 @@ namespace CircularProgressBarSample
             // 
             // circularProgressBar5
             // 
-            this.circularProgressBar5.AnimationFunction = ((WinFormAnimation.AnimationFunctions.Function)(resources.GetObject("circularProgressBar5.AnimationFunction")));
+            this.circularProgressBar5.AnimationFunction = KnownAnimationFunctions.Liner;
             this.circularProgressBar5.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.circularProgressBar5.AnimationSpeed = 500;
             this.circularProgressBar5.BackColor = System.Drawing.Color.Transparent;
@@ -110,7 +111,7 @@ namespace CircularProgressBarSample
             // 
             // circularProgressBar6
             // 
-            this.circularProgressBar6.AnimationFunction = ((WinFormAnimation.AnimationFunctions.Function)(resources.GetObject("circularProgressBar6.AnimationFunction")));
+            this.circularProgressBar6.AnimationFunction = KnownAnimationFunctions.Liner;
             this.circularProgressBar6.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.circularProgressBar6.AnimationSpeed = 500;
             this.circularProgressBar6.BackColor = System.Drawing.Color.Transparent;
@@ -143,7 +144,7 @@ namespace CircularProgressBarSample
             // 
             // circularProgressBar3
             // 
-            this.circularProgressBar3.AnimationFunction = ((WinFormAnimation.AnimationFunctions.Function)(resources.GetObject("circularProgressBar3.AnimationFunction")));
+            this.circularProgressBar3.AnimationFunction = KnownAnimationFunctions.Liner;
             this.circularProgressBar3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.circularProgressBar3.AnimationSpeed = 500;
             this.circularProgressBar3.BackColor = System.Drawing.Color.Transparent;
@@ -176,7 +177,7 @@ namespace CircularProgressBarSample
             // 
             // circularProgressBar2
             // 
-            this.circularProgressBar2.AnimationFunction = ((WinFormAnimation.AnimationFunctions.Function)(resources.GetObject("circularProgressBar2.AnimationFunction")));
+            this.circularProgressBar2.AnimationFunction = KnownAnimationFunctions.Liner;
             this.circularProgressBar2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.circularProgressBar2.AnimationSpeed = 500;
             this.circularProgressBar2.BackColor = System.Drawing.Color.Transparent;
@@ -210,7 +211,7 @@ namespace CircularProgressBarSample
             // 
             // circularProgressBar1
             // 
-            this.circularProgressBar1.AnimationFunction = ((WinFormAnimation.AnimationFunctions.Function)(resources.GetObject("circularProgressBar1.AnimationFunction")));
+            this.circularProgressBar1.AnimationFunction = KnownAnimationFunctions.Liner;
             this.circularProgressBar1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.circularProgressBar1.AnimationSpeed = 500;
             this.circularProgressBar1.BackColor = System.Drawing.Color.Transparent;
@@ -252,7 +253,7 @@ namespace CircularProgressBarSample
             // 
             // circularProgressBar
             // 
-            this.circularProgressBar.AnimationFunction = ((WinFormAnimation.AnimationFunctions.Function)(resources.GetObject("circularProgressBar.AnimationFunction")));
+            this.circularProgressBar.AnimationFunction = KnownAnimationFunctions.Liner;
             this.circularProgressBar.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.circularProgressBar.AnimationSpeed = 500;
             this.circularProgressBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));

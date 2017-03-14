@@ -16,13 +16,16 @@ namespace CircularProgressBar
     [DefaultBindingProperty("Value")]
     public class CircularProgressBar : ProgressBar
     {
+        private readonly Animator _animator;
         private int? _animatedStartAngle;
 
         private float? _animatedValue;
 
-        private readonly Animator _animator;
+        private AnimationFunctions.Function _animationFunction;
 
         private Brush _backBrush;
+
+        private KnownAnimationFunctions _knownAnimationFunction;
 
         private ProgressBarStyle? _lastStyle;
 
@@ -41,7 +44,7 @@ namespace CircularProgressBar
                 ControlStyles.ResizeRedraw, true);
 
             _animator = DesignMode ? null : new Animator();
-            AnimationFunction = AnimationFunctions.CubicEaseIn;
+            AnimationFunction = KnownAnimationFunctions.Liner;
             AnimationSpeed = 500;
             MarqueeAnimationSpeed = 2000;
             StartAngle = 270;
@@ -108,11 +111,35 @@ namespace CircularProgressBar
         }
 
         /// <summary>
-        ///     Gets or sets the animation function.
+        ///     Sets a known animation function.
+        /// </summary>
+        [Category("Behavior")]
+        public KnownAnimationFunctions AnimationFunction
+        {
+            get { return _knownAnimationFunction; }
+            set
+            {
+                _animationFunction = AnimationFunctions.FromKnown(value);
+                _knownAnimationFunction = value;
+            }
+        }
+
+        /// <summary>
+        ///     Sets a custom animation function.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Browsable(false)]
-        public AnimationFunctions.Function AnimationFunction { get; set; }
+        public AnimationFunctions.Function CustomAnimationFunction
+        {
+            private get { return _animationFunction; }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException(nameof(value));
+                _knownAnimationFunction = KnownAnimationFunctions.None;
+                _animationFunction = value;
+            }
+        }
 
         /// <summary>
         ///     Gets or sets the animation speed in milliseconds.
@@ -266,11 +293,8 @@ namespace CircularProgressBar
                 _backBrush?.Dispose();
                 _backBrush = new SolidBrush(BackColor);
                 if (BackColor.A == 255)
-                {
                     return;
-                }
                 if (Parent != null)
-                {
                     using (var parentImage = new Bitmap(Parent.Width, Parent.Height))
                     {
                         using (var parentGraphic = Graphics.FromImage(parentImage))
@@ -280,18 +304,13 @@ namespace CircularProgressBar
                             InvokePaint(Parent, pe);
 
                             if (BackColor.A > 0) // Translucent
-                            {
                                 parentGraphic.FillRectangle(_backBrush, Bounds);
-                            }
                         }
                         _backBrush = new TextureBrush(parentImage);
                         ((TextureBrush) _backBrush).TranslateTransform(-Bounds.X, -Bounds.Y);
                     }
-                }
                 else
-                {
                     _backBrush = new SolidBrush(Color.FromArgb(255, BackColor));
-                }
             }
         }
 
@@ -319,19 +338,13 @@ namespace CircularProgressBar
                 if (!DesignMode)
                 {
                     if (Style == ProgressBarStyle.Marquee)
-                    {
                         InitializeMarquee(_lastStyle != Style);
-                    }
                     else
-                    {
                         InitializeContinues(_lastStyle != Style);
-                    }
                     _lastStyle = Style;
                 }
                 if (_backBrush == null)
-                {
                     RecreateBackgroundBrush();
-                }
                 StartPaint(e.Graphics);
             }
             catch
@@ -347,14 +360,13 @@ namespace CircularProgressBar
         protected virtual void InitializeContinues(bool firstTime)
         {
             if ((_lastValue == Value) && !firstTime)
-            {
                 return;
-            }
 
             _lastValue = Value;
 
             _animator.Stop();
-            _animator.Paths = new Path(_animatedValue ?? Value, Value, (ulong) AnimationSpeed).ToArray();
+            _animator.Paths =
+                new Path(_animatedValue ?? Value, Value, (ulong) AnimationSpeed, CustomAnimationFunction).ToArray();
             _animator.Repeat = false;
             _animatedStartAngle = null;
             _animator.Play(
@@ -381,13 +393,13 @@ namespace CircularProgressBar
         protected virtual void InitializeMarquee(bool firstTime)
         {
             if (!firstTime &&
-                ((_animator.ActivePath == null) || (_animator.ActivePath.Duration == (ulong) MarqueeAnimationSpeed)))
-            {
+                ((_animator.ActivePath == null) ||
+                 ((_animator.ActivePath.Duration == (ulong) MarqueeAnimationSpeed) &&
+                  (_animator.ActivePath.Function == CustomAnimationFunction))))
                 return;
-            }
 
             _animator.Stop();
-            _animator.Paths = new Path(0, 359, (ulong) MarqueeAnimationSpeed).ToArray();
+            _animator.Paths = new Path(0, 359, (ulong) MarqueeAnimationSpeed, CustomAnimationFunction).ToArray();
             _animator.Repeat = true;
             _animatedValue = null;
             _animator.Play(
@@ -396,7 +408,7 @@ namespace CircularProgressBar
                     {
                         try
                         {
-                            _animatedStartAngle = (int) v;
+                            _animatedStartAngle = (int) (v%360);
                             Invalidate();
                         }
                         catch
@@ -469,9 +481,7 @@ namespace CircularProgressBar
                     }
 
                     if (Text == string.Empty)
-                    {
                         return;
-                    }
 
                     point.X += TextMargin.Left;
                     point.Y += TextMargin.Top;
