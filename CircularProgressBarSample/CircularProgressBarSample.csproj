@@ -35,8 +35,10 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainForm.cs">
@@ -74,7 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CircularProgressBar\CircularProgressBar.csproj">
-      <Project>{8B31ED1C-81D5-4777-9BE9-A269D46543FD}</Project>
+      <Project>{8b31ed1c-81d5-4777-9be9-a269d46543fd}</Project>
       <Name>CircularProgressBar</Name>
     </ProjectReference>
   </ItemGroup>

@@ -3,3 +3,4 @@
 */obj/*
 *.nupkg
 packages/*
+*.user

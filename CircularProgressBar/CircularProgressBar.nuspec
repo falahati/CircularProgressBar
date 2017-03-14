@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
-        <id>CircularProgressBar</id>
-        <version>0.0</version>
+        <id>$id$</id>
+        <version>$version$</version>
         <title>Circular ProgressBar for WinForm (.Net3.5+)</title>
         <authors>Soroush Falahati</authors>
         <licenseUrl>https://github.com/falahati/CircularProgress/blob/master/LICENSE</licenseUrl>
         <projectUrl>https://github.com/falahati/CircularProgress</projectUrl>
 		<iconUrl>https://github.com/falahati/CircularProgress/blob/master/CircularProgressBar/Icon.png?raw=true</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Circular ProgressBar is a custom control for WinForm with animation.</description>
+        <description>$description$</description>
         <language>en-US</language>
     </metadata>
     <files>
