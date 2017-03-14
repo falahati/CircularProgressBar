@@ -50,7 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CircularProgressBar.nuspec" />
+    <None Include="Icon.png" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CircularProgressBar.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="CircularProgressBar.targets" />

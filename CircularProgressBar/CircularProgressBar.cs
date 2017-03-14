@@ -11,6 +11,9 @@ namespace CircularProgressBar
     /// <summary>
     ///     The circular progress bar windows form control
     /// </summary>
+    [ToolboxItem(true)]
+    [ToolboxBitmap(typeof(CircularProgressBar), "CircularProgressBar.bmp")]
+    [DefaultBindingProperty("Value")]
     public class CircularProgressBar : ProgressBar
     {
         private int? _animatedStartAngle;
