@@ -39,8 +39,8 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="WinFormAnimation, Version=1.5.6283.2908, Culture=en, processorArchitecture=MSIL">
-      <HintPath>..\packages\WinFormAnimation.1.5.6283.2908\lib\net35-client\WinFormAnimation.dll</HintPath>
+    <Reference Include="WinFormAnimation, Version=1.5.6284.34583, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WinFormAnimation.1.5.6284.34583\lib\net35-client\WinFormAnimation.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
