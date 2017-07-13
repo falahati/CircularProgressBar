@@ -4,8 +4,10 @@
 =====================================================================
 
 USAGE
-	Build your application, and then use the toolbox to add the control
-  to your forms.
+	First, build your application, and then use the toolbox to add the
+  control to your forms.
+    If  the  control  was  still  absent, add  it  manually  from  the
+  'packages' directory in your solution's root path.
 
 KNOWN ISSUE WITH VISUAL STUDIO TOOLBOX
   If you couldn't find this control in the  toolbox and you failed to

@@ -54,12 +54,11 @@
   <ItemGroup>
     <None Include="Icon.png" />
     <None Include="packages.config" />
+    <None Include="readme.txt" />
+    <None Include="CircularProgressBar.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CircularProgressBar.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="../NuGet.targets" />

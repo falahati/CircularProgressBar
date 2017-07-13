@@ -15,5 +15,6 @@
     <files>
 		<file src="readme.txt" target="" />
 		<file src="Icon.png" target="" />
+		<file src="init.ps1" target="tools" />
     </files>
 </package>
