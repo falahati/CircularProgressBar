@@ -146,6 +146,13 @@ namespace CircularProgressBar
         /// </summary>
         [Category("Behavior")]
         public int AnimationSpeed { get; set; }
+        
+        /// <summary>
+        ///     Enable or disble Animation.
+        /// </summary>
+        [Category("Behavior")]
+        [Description("Enable or disble Animation (more responsive update of progress circle; less pretty). ")]
+        public bool Animation { get; set; } = true;
 
         /// <summary>
         /// </summary>
@@ -335,7 +342,7 @@ namespace CircularProgressBar
         {
             try
             {
-                if (!DesignMode)
+                if (!DesignMode & Animation)
                 {
                     if (Style == ProgressBarStyle.Marquee)
                         InitializeMarquee(_lastStyle != Style);
