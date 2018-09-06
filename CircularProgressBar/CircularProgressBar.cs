@@ -294,7 +294,7 @@ namespace CircularProgressBar
                 _backBrush = new SolidBrush(BackColor);
                 if (BackColor.A == 255)
                     return;
-                if (Parent != null)
+                if (Parent != null && Parent.Width > 0 && Parent.Height > 0)
                     using (var parentImage = new Bitmap(Parent.Width, Parent.Height))
                     {
                         using (var parentGraphic = Graphics.FromImage(parentImage))
