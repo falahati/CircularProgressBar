@@ -57,7 +57,7 @@ namespace CircularProgressBar
             ForeColor = Color.FromArgb(64, 64, 64);
             DoubleBuffered = true;
             Font = new Font(Font.FontFamily, 72, FontStyle.Bold);
-            SecondaryFont = new Font(Font.FontFamily, (float) (Font.Size*.5), FontStyle.Regular);
+            SecondaryFont = new Font(Font.FontFamily, (float) (Font.Size * .5), FontStyle.Regular);
             // ReSharper restore DoNotCallOverridableMethodsInConstructor
 
             OuterMargin = -25;
@@ -86,43 +86,24 @@ namespace CircularProgressBar
         }
 
         /// <summary>
-        ///     Gets or sets the font of text in the <see cref="CircularProgressBar" />.
-        /// </summary>
-        /// <returns>
-        ///     The <see cref="T:System.Drawing.Font" /> of the text. The default is the font set by the container.
-        /// </returns>
-        [EditorBrowsable(EditorBrowsableState.Always)]
-        [Browsable(true)]
-        public override Font Font
-        {
-            get { return base.Font; }
-            set { base.Font = value; }
-        }
-
-        /// <summary>
-        ///     Gets or sets the text in the <see cref="CircularProgressBar" />.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Always)]
-        [Browsable(true)]
-        public override string Text
-        {
-            get { return base.Text; }
-            set { base.Text = value; }
-        }
-
-        /// <summary>
         ///     Sets a known animation function.
         /// </summary>
         [Category("Behavior")]
         public KnownAnimationFunctions AnimationFunction
         {
-            get { return _knownAnimationFunction; }
+            get => _knownAnimationFunction;
             set
             {
                 _animationFunction = AnimationFunctions.FromKnown(value);
                 _knownAnimationFunction = value;
             }
         }
+
+        /// <summary>
+        ///     Gets or sets the animation speed in milliseconds.
+        /// </summary>
+        [Category("Behavior")]
+        public int AnimationSpeed { get; set; }
 
         /// <summary>
         ///     Sets a custom animation function.
@@ -135,33 +116,28 @@ namespace CircularProgressBar
             set
             {
                 if (value == null)
+                {
                     throw new ArgumentNullException(nameof(value));
+                }
+
                 _knownAnimationFunction = KnownAnimationFunctions.None;
                 _animationFunction = value;
             }
         }
 
         /// <summary>
-        ///     Gets or sets the animation speed in milliseconds.
+        ///     Gets or sets the font of text in the <see cref="CircularProgressBar" />.
         /// </summary>
-        [Category("Behavior")]
-        public int AnimationSpeed { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [Category("Layout")]
-        public Padding TextMargin { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [Category("Layout")]
-        public Padding SuperscriptMargin { get; set; }
-
-
-        /// <summary>
-        /// </summary>
-        [Category("Layout")]
-        public Padding SubscriptMargin { get; set; }
+        /// <returns>
+        ///     The <see cref="T:System.Drawing.Font" /> of the text. The default is the font set by the container.
+        /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [Browsable(true)]
+        public override Font Font
+        {
+            get => base.Font;
+            set => base.Font = value;
+        }
 
         /// <summary>
         /// </summary>
@@ -201,12 +177,28 @@ namespace CircularProgressBar
         /// <summary>
         /// </summary>
         [Category("Layout")]
-        public int StartAngle { get; set; }
+        public int ProgressWidth { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [Category("Appearance")]
+        public Font SecondaryFont { get; set; }
 
         /// <summary>
         /// </summary>
         [Category("Layout")]
-        public int ProgressWidth { get; set; }
+        public int StartAngle { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [Category("Appearance")]
+        public Color SubscriptColor { get; set; }
+
+
+        /// <summary>
+        /// </summary>
+        [Category("Layout")]
+        public Padding SubscriptMargin { get; set; }
 
         /// <summary>
         /// </summary>
@@ -216,12 +208,12 @@ namespace CircularProgressBar
         /// <summary>
         /// </summary>
         [Category("Appearance")]
-        public Color SubscriptColor { get; set; }
+        public Color SuperscriptColor { get; set; }
 
         /// <summary>
         /// </summary>
-        [Category("Appearance")]
-        public Font SecondaryFont { get; set; }
+        [Category("Layout")]
+        public Padding SuperscriptMargin { get; set; }
 
         /// <summary>
         /// </summary>
@@ -229,9 +221,41 @@ namespace CircularProgressBar
         public string SuperscriptText { get; set; }
 
         /// <summary>
+        ///     Gets or sets the text in the <see cref="CircularProgressBar" />.
         /// </summary>
-        [Category("Appearance")]
-        public Color SuperscriptColor { get; set; }
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [Browsable(true)]
+        public override string Text
+        {
+            get => base.Text;
+            set => base.Text = value;
+        }
+
+        /// <summary>
+        /// </summary>
+        [Category("Layout")]
+        public Padding TextMargin { get; set; }
+
+        private static PointF AddPoint(PointF p, int v)
+        {
+            p.X += v;
+            p.Y += v;
+
+            return p;
+        }
+
+        private static SizeF AddSize(SizeF s, int v)
+        {
+            s.Height += v;
+            s.Width += v;
+
+            return s;
+        }
+
+        private static Rectangle ToRectangle(RectangleF rect)
+        {
+            return new Rectangle((int) rect.X, (int) rect.Y, (int) rect.Width, (int) rect.Height);
+        }
 
         /// <inheritdoc />
         protected override void OnLocationChanged(EventArgs e)
@@ -240,11 +264,52 @@ namespace CircularProgressBar
             Invalidate();
         }
 
-        /// <inheritdoc />
-        protected override void OnStyleChanged(EventArgs e)
+
+        /// <summary>
+        ///     Raises the <see cref="E:System.Windows.Forms.Control.Paint" /> event.
+        /// </summary>
+        /// <param name="e">A <see cref="T:System.Windows.Forms.PaintEventArgs" /> that contains the event data. </param>
+        protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnStyleChanged(e);
-            Invalidate();
+            try
+            {
+                if (!DesignMode)
+                {
+                    if (Style == ProgressBarStyle.Marquee)
+                    {
+                        InitializeMarquee(_lastStyle != Style);
+                    }
+                    else
+                    {
+                        InitializeContinues(_lastStyle != Style);
+                    }
+
+                    _lastStyle = Style;
+                }
+
+                if (_backBrush == null)
+                {
+                    RecreateBackgroundBrush();
+                }
+
+                StartPaint(e.Graphics);
+            }
+            catch
+            {
+                // ignored
+            }
+        }
+
+        /// <inheritdoc />
+        protected override void OnParentBackColorChanged(EventArgs e)
+        {
+            RecreateBackgroundBrush();
+        }
+
+        /// <inheritdoc />
+        protected override void OnParentBackgroundImageChanged(EventArgs e)
+        {
+            RecreateBackgroundBrush();
         }
 
         /// <inheritdoc />
@@ -255,12 +320,109 @@ namespace CircularProgressBar
                 Parent.Invalidated -= ParentOnInvalidated;
                 Parent.Resize -= ParentOnResize;
             }
+
             base.OnParentChanged(e);
+
             if (Parent != null)
             {
                 Parent.Invalidated += ParentOnInvalidated;
                 Parent.Resize += ParentOnResize;
             }
+        }
+
+        /// <inheritdoc />
+        protected override void OnStyleChanged(EventArgs e)
+        {
+            base.OnStyleChanged(e);
+            Invalidate();
+        }
+
+        /// <summary>
+        ///     Initialize the animation for the continues styling
+        /// </summary>
+        /// <param name="firstTime">True if it is the first execution of this function, otherwise false</param>
+        protected virtual void InitializeContinues(bool firstTime)
+        {
+            if (_lastValue == Value && !firstTime)
+            {
+                return;
+            }
+
+            _lastValue = Value;
+
+            _animator.Stop();
+            _animatedStartAngle = null;
+
+            if (AnimationSpeed <= 0)
+            {
+                _animatedValue = Value;
+                Invalidate();
+
+                return;
+            }
+
+            _animator.Paths =
+                new Path(_animatedValue ?? Value, Value, (ulong) AnimationSpeed, CustomAnimationFunction).ToArray();
+            _animator.Repeat = false;
+            _animator.Play(
+                new SafeInvoker<float>(
+                    v =>
+                    {
+                        try
+                        {
+                            _animatedValue = v;
+                            Invalidate();
+                        }
+                        catch
+                        {
+                            _animator.Stop();
+                        }
+                    },
+                    this));
+        }
+
+        /// <summary>
+        ///     Initialize the animation for the marquee styling
+        /// </summary>
+        /// <param name="firstTime">True if it is the first execution of this function, otherwise false</param>
+        protected virtual void InitializeMarquee(bool firstTime)
+        {
+            if (!firstTime &&
+                (_animator.ActivePath == null ||
+                 _animator.ActivePath.Duration == (ulong) MarqueeAnimationSpeed &&
+                 _animator.ActivePath.Function == CustomAnimationFunction))
+            {
+                return;
+            }
+
+            _animator.Stop();
+            _animatedValue = null;
+
+            if (AnimationSpeed <= 0)
+            {
+                _animatedStartAngle = 0;
+                Invalidate();
+
+                return;
+            }
+
+            _animator.Paths = new Path(0, 359, (ulong) MarqueeAnimationSpeed, CustomAnimationFunction).ToArray();
+            _animator.Repeat = true;
+            _animator.Play(
+                new SafeInvoker<float>(
+                    v =>
+                    {
+                        try
+                        {
+                            _animatedStartAngle = (int) (v % 360);
+                            Invalidate();
+                        }
+                        catch
+                        {
+                            _animator.Stop();
+                        }
+                    },
+                    this));
         }
 
         /// <summary>
@@ -292,147 +454,38 @@ namespace CircularProgressBar
             {
                 _backBrush?.Dispose();
                 _backBrush = new SolidBrush(BackColor);
+
                 if (BackColor.A == 255)
+                {
                     return;
+                }
+
                 if (Parent != null && Parent.Width > 0 && Parent.Height > 0)
+                {
                     using (var parentImage = new Bitmap(Parent.Width, Parent.Height))
                     {
                         using (var parentGraphic = Graphics.FromImage(parentImage))
                         {
-                            var pe = new PaintEventArgs(parentGraphic, new Rectangle(new Point(0, 0), parentImage.Size));
+                            var pe = new PaintEventArgs(parentGraphic,
+                                new Rectangle(new Point(0, 0), parentImage.Size));
                             InvokePaintBackground(Parent, pe);
                             InvokePaint(Parent, pe);
 
                             if (BackColor.A > 0) // Translucent
+                            {
                                 parentGraphic.FillRectangle(_backBrush, Bounds);
+                            }
                         }
+
                         _backBrush = new TextureBrush(parentImage);
                         ((TextureBrush) _backBrush).TranslateTransform(-Bounds.X, -Bounds.Y);
                     }
-                else
-                    _backBrush = new SolidBrush(Color.FromArgb(255, BackColor));
-            }
-        }
-
-        /// <inheritdoc />
-        protected override void OnParentBackColorChanged(EventArgs e)
-        {
-            RecreateBackgroundBrush();
-        }
-
-        /// <inheritdoc />
-        protected override void OnParentBackgroundImageChanged(EventArgs e)
-        {
-            RecreateBackgroundBrush();
-        }
-
-
-        /// <summary>
-        ///     Raises the <see cref="E:System.Windows.Forms.Control.Paint" /> event.
-        /// </summary>
-        /// <param name="e">A <see cref="T:System.Windows.Forms.PaintEventArgs" /> that contains the event data. </param>
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            try
-            {
-                if (!DesignMode)
-                {
-                    if (Style == ProgressBarStyle.Marquee)
-                        InitializeMarquee(_lastStyle != Style);
-                    else
-                        InitializeContinues(_lastStyle != Style);
-                    _lastStyle = Style;
                 }
-                if (_backBrush == null)
-                    RecreateBackgroundBrush();
-                StartPaint(e.Graphics);
+                else
+                {
+                    _backBrush = new SolidBrush(Color.FromArgb(255, BackColor));
+                }
             }
-            catch
-            {
-                // ignored
-            }
-        }
-
-        /// <summary>
-        ///     Initialize the animation for the continues styling
-        /// </summary>
-        /// <param name="firstTime">True if it is the first execution of this function, otherwise false</param>
-        protected virtual void InitializeContinues(bool firstTime)
-        {
-            if ((_lastValue == Value) && !firstTime)
-                return;
-
-            _lastValue = Value;
-
-            _animator.Stop();
-            _animatedStartAngle = null;
-
-            if (AnimationSpeed <= 0)
-            {
-                _animatedValue = Value;
-                Invalidate();
-                return;
-            }
-
-            _animator.Paths =
-                new Path(_animatedValue ?? Value, Value, (ulong) AnimationSpeed, CustomAnimationFunction).ToArray();
-            _animator.Repeat = false;
-            _animator.Play(
-                new SafeInvoker<float>(
-                    v =>
-                    {
-                        try
-                        {
-                            _animatedValue = v;
-                            Invalidate();
-                        }
-                        catch
-                        {
-                            _animator.Stop();
-                        }
-                    },
-                    this));
-        }
-
-        /// <summary>
-        ///     Initialize the animation for the marquee styling
-        /// </summary>
-        /// <param name="firstTime">True if it is the first execution of this function, otherwise false</param>
-        protected virtual void InitializeMarquee(bool firstTime)
-        {
-            if (!firstTime &&
-                ((_animator.ActivePath == null) ||
-                 ((_animator.ActivePath.Duration == (ulong) MarqueeAnimationSpeed) &&
-                  (_animator.ActivePath.Function == CustomAnimationFunction))))
-                return;
-
-            _animator.Stop();
-            _animatedValue = null;
-
-            if (AnimationSpeed <= 0)
-            {
-                _animatedStartAngle = 0;
-                Invalidate();
-                return;
-            }
-
-            _animator.Paths = new Path(0, 359, (ulong) MarqueeAnimationSpeed, CustomAnimationFunction).ToArray();
-            _animator.Repeat = true;
-            _animator.Play(
-                new SafeInvoker<float>(
-                    v =>
-                    {
-                        try
-                        {
-                            _animatedStartAngle = (int) (v%360);
-                            Invalidate();
-                        }
-                        catch
-                        {
-                            _animator.Stop();
-                        }
-                    },
-                    this));
         }
 
         /// <summary>
@@ -448,56 +501,62 @@ namespace CircularProgressBar
                     g.TextRenderingHint = TextRenderingHint.AntiAlias;
                     g.SmoothingMode = SmoothingMode.AntiAlias;
                     var point = AddPoint(Point.Empty, 2);
-                    var size = AddSize(Size, -2*2);
+                    var size = AddSize(Size, -2 * 2);
+
                     if (OuterWidth + OuterMargin < 0)
                     {
                         var offset = Math.Abs(OuterWidth + OuterMargin);
                         point = AddPoint(Point.Empty, offset);
-                        size = AddSize(Size, -2*offset);
+                        size = AddSize(Size, -2 * offset);
                     }
 
-                    if ((OuterColor != Color.Empty) && (OuterColor != Color.Transparent) && (OuterWidth != 0))
+                    if (OuterColor != Color.Empty && OuterColor != Color.Transparent && OuterWidth != 0)
                     {
                         g.FillEllipse(new SolidBrush(OuterColor), new RectangleF(point, size));
+
                         if (OuterWidth >= 0)
                         {
                             point = AddPoint(point, OuterWidth);
-                            size = AddSize(size, -2*OuterWidth);
+                            size = AddSize(size, -2 * OuterWidth);
                             g.FillEllipse(_backBrush, new RectangleF(point, size));
                         }
                     }
 
                     point = AddPoint(point, OuterMargin);
-                    size = AddSize(size, -2*OuterMargin);
+                    size = AddSize(size, -2 * OuterMargin);
 
                     g.FillPie(
                         new SolidBrush(ProgressColor),
                         ToRectangle(new RectangleF(point, size)),
                         _animatedStartAngle ?? StartAngle,
-                        (_animatedValue ?? Value)/(Maximum - Minimum)*360);
+                        (_animatedValue ?? Value) / (Maximum - Minimum) * 360);
+
                     if (ProgressWidth >= 0)
                     {
                         point = AddPoint(point, ProgressWidth);
-                        size = AddSize(size, -2*ProgressWidth);
+                        size = AddSize(size, -2 * ProgressWidth);
                         g.FillEllipse(_backBrush, new RectangleF(point, size));
                     }
 
                     point = AddPoint(point, InnerMargin);
-                    size = AddSize(size, -2*InnerMargin);
+                    size = AddSize(size, -2 * InnerMargin);
 
-                    if ((InnerColor != Color.Empty) && (InnerColor != Color.Transparent) && (InnerWidth != 0))
+                    if (InnerColor != Color.Empty && InnerColor != Color.Transparent && InnerWidth != 0)
                     {
                         g.FillEllipse(new SolidBrush(InnerColor), new RectangleF(point, size));
+
                         if (InnerWidth >= 0)
                         {
                             point = AddPoint(point, InnerWidth);
-                            size = AddSize(size, -2*InnerWidth);
+                            size = AddSize(size, -2 * InnerWidth);
                             g.FillEllipse(_backBrush, new RectangleF(point, size));
                         }
                     }
 
                     if (Text == string.Empty)
+                    {
                         return;
+                    }
 
                     point.X += TextMargin.Left;
                     point.Y += TextMargin.Top;
@@ -511,13 +570,15 @@ namespace CircularProgressBar
                         };
                     var textSize = g.MeasureString(Text, Font);
                     var textPoint = new PointF(
-                        point.X + (size.Width - textSize.Width)/2,
-                        point.Y + (size.Height - textSize.Height)/2);
-                    if ((SubscriptText != string.Empty) || (SuperscriptText != string.Empty))
+                        point.X + (size.Width - textSize.Width) / 2,
+                        point.Y + (size.Height - textSize.Height) / 2);
+
+                    if (SubscriptText != string.Empty || SuperscriptText != string.Empty)
                     {
                         float maxSWidth = 0;
                         var supSize = SizeF.Empty;
                         var subSize = SizeF.Empty;
+
                         if (SuperscriptText != string.Empty)
                         {
                             supSize = g.MeasureString(SuperscriptText, SecondaryFont);
@@ -534,12 +595,13 @@ namespace CircularProgressBar
                             subSize.Height -= SubscriptMargin.Bottom;
                         }
 
-                        textPoint.X -= maxSWidth/4;
+                        textPoint.X -= maxSWidth / 4;
+
                         if (SuperscriptText != string.Empty)
                         {
                             var supPoint = new PointF(
-                                textPoint.X + textSize.Width - supSize.Width/2,
-                                textPoint.Y - supSize.Height*0.85f);
+                                textPoint.X + textSize.Width - supSize.Width / 2,
+                                textPoint.Y - supSize.Height * 0.85f);
                             supPoint.X += SuperscriptMargin.Left;
                             supPoint.Y += SuperscriptMargin.Top;
                             g.DrawString(
@@ -553,8 +615,8 @@ namespace CircularProgressBar
                         if (SubscriptText != string.Empty)
                         {
                             var subPoint = new PointF(
-                                textPoint.X + textSize.Width - subSize.Width/2,
-                                textPoint.Y + textSize.Height*0.85f);
+                                textPoint.X + textSize.Width - subSize.Width / 2,
+                                textPoint.Y + textSize.Height * 0.85f);
                             subPoint.X += SubscriptMargin.Left;
                             subPoint.Y += SubscriptMargin.Top;
                             g.DrawString(
@@ -578,25 +640,6 @@ namespace CircularProgressBar
             {
                 // ignored
             }
-        }
-
-        private static PointF AddPoint(PointF p, int v)
-        {
-            p.X += v;
-            p.Y += v;
-            return p;
-        }
-
-        private static SizeF AddSize(SizeF s, int v)
-        {
-            s.Height += v;
-            s.Width += v;
-            return s;
-        }
-
-        private static Rectangle ToRectangle(RectangleF rect)
-        {
-            return new Rectangle((int) rect.X, (int) rect.Y, (int) rect.Width, (int) rect.Height);
         }
     }
 }
