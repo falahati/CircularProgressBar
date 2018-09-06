@@ -365,10 +365,18 @@ namespace CircularProgressBar
             _lastValue = Value;
 
             _animator.Stop();
+            _animatedStartAngle = null;
+
+            if (AnimationSpeed <= 0)
+            {
+                _animatedValue = Value;
+                Invalidate();
+                return;
+            }
+
             _animator.Paths =
                 new Path(_animatedValue ?? Value, Value, (ulong) AnimationSpeed, CustomAnimationFunction).ToArray();
             _animator.Repeat = false;
-            _animatedStartAngle = null;
             _animator.Play(
                 new SafeInvoker<float>(
                     v =>
@@ -399,9 +407,17 @@ namespace CircularProgressBar
                 return;
 
             _animator.Stop();
+            _animatedValue = null;
+
+            if (AnimationSpeed <= 0)
+            {
+                _animatedStartAngle = 0;
+                Invalidate();
+                return;
+            }
+
             _animator.Paths = new Path(0, 359, (ulong) MarqueeAnimationSpeed, CustomAnimationFunction).ToArray();
             _animator.Repeat = true;
-            _animatedValue = null;
             _animator.Play(
                 new SafeInvoker<float>(
                     v =>
