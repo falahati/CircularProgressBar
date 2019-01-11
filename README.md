@@ -1,18 +1,20 @@
 # <img src="CircularProgressBar/Icon.png" width="42" alt="Icon"> Circular ProgressBar for WinForm [.Net3.5+]
 Circular ProgressBar is a custom control and inplace replacement of 'ProgressBar' for WinForm with animation.
 
-### WHERE TO FIND
+## WHERE TO FIND
 This library is available as a NuGet package at [nuget.org](https://www.nuget.org/packages/CircularProgressBar/).
 
+## DONATION
+[<img width="24" height="24" src="http://icons.iconarchive.com/icons/sonya/swarm/256/Coffee-icon.png"/>**Every coffee counts! :)**](https://www.coinpayments.net/index.php?cmd=_donate&reset=1&merchant=820707aded07845511b841f9c4c335cd&item_name=Donate&currency=USD&amountf=10.00000000&allow_amount=1&want_shipping=0&allow_extra=1)
 
-### HOW TO USE
+## HOW TO USE
 Use toolbox to add the control to your forms.
 
 Check the 'CircularProgressBarSample' project for tons of usage examples.
 ![Screenshot](/screenshot.gif?raw=true "Screenshot")
 
-### MEMBERS
-#####[Properties]
+## MEMBERS
+#### [Properties]
 
 * `CircularProgressBar.Maximum`: Shows and changes the maximum acceptable value for the progress bar.
 * `CircularProgressBar.Minimum`: Shows and changes the minimum acceptable value for the progress bar.
@@ -42,7 +44,7 @@ Check the 'CircularProgressBarSample' project for tons of usage examples.
 * `CircularProgressBar.OuterMargin`: Margin of the outer circle.
 
 
-### LICENSE
+## LICENSE
 The MIT License (MIT)
 
 Copyright (c) 2016 Soroush Falahati
