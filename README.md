@@ -1,18 +1,35 @@
 # <img src="CircularProgressBar/Icon.png" width="42" alt="Icon"> Circular ProgressBar for WinForm [.Net3.5+]
+[![](https://img.shields.io/github/license/falahati/CircularProgressBar.svg?style=flat-square)](https://github.com/falahati/CircularProgressBar/blob/master/LICENSE)
+[![](https://img.shields.io/github/commit-activity/y/falahati/CircularProgressBar.svg?style=flat-square)](https://github.com/falahati/CircularProgressBar/commits/master)
+[![](https://img.shields.io/github/issues/falahati/CircularProgressBar.svg?style=flat-square)](https://github.com/falahati/CircularProgressBar/issues)
+
 Circular ProgressBar is a custom control and inplace replacement of 'ProgressBar' for WinForm with animation.
 
-### WHERE TO FIND
+## WHERE TO FIND
+[![](https://img.shields.io/nuget/dt/CircularProgressBar.svg?style=flat-square)](https://www.nuget.org/packages/CircularProgressBar)
+[![](https://img.shields.io/nuget/v/CircularProgressBar.svg?style=flat-square)](https://www.nuget.org/packages/CircularProgressBar)
+
 This library is available as a NuGet package at [nuget.org](https://www.nuget.org/packages/CircularProgressBar/).
 
+## DONATION
+Donations assist development and are greatly appreciated; also always remember that [every coffee counts!](https://media.makeameme.org/created/one-simply-does-i9k8kx.jpg) :)
 
-### HOW TO USE
+[![](https://img.shields.io/badge/fiat-PayPal-8a00a3.svg?style=flat-square)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=WR3KK2B6TYYQ4&item_name=Donation&currency_code=USD&source=url)
+[![](https://img.shields.io/badge/crypto-CoinPayments-8a00a3.svg?style=flat-square)](https://www.coinpayments.net/index.php?cmd=_donate&reset=1&merchant=820707aded07845511b841f9c4c335cd&item_name=Donate&currency=USD&amountf=20.00000000&allow_amount=1&want_shipping=0&allow_extra=1)
+[![](https://img.shields.io/badge/shetab-ZarinPal-8a00a3.svg?style=flat-square)](https://zarinp.al/@falahati)
+
+**--OR--**
+
+You can always donate your time by contributing to the project or by introducing it to others.
+
+## HOW TO USE
 Use toolbox to add the control to your forms.
 
 Check the 'CircularProgressBarSample' project for tons of usage examples.
 ![Screenshot](/screenshot.gif?raw=true "Screenshot")
 
-### MEMBERS
-#####[Properties]
+## MEMBERS
+#### [Properties]
 
 * `CircularProgressBar.Maximum`: Shows and changes the maximum acceptable value for the progress bar.
 * `CircularProgressBar.Minimum`: Shows and changes the minimum acceptable value for the progress bar.
@@ -42,7 +59,7 @@ Check the 'CircularProgressBarSample' project for tons of usage examples.
 * `CircularProgressBar.OuterMargin`: Margin of the outer circle.
 
 
-### LICENSE
+## LICENSE
 The MIT License (MIT)
 
 Copyright (c) 2016 Soroush Falahati
