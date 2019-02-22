@@ -5,3 +5,6 @@
 packages/*
 *.user
 /.vs/*
+/Debug/*
+/Release/*
+*.pfx
