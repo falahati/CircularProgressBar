@@ -34,6 +34,12 @@
     <Prefer32Bit>false</Prefer32Bit>
     <DocumentationFile>bin\Release\CircularProgressBar.xml</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>strong-name.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -56,6 +62,7 @@
     <None Include="packages.config" />
     <None Include="readme.txt" />
     <None Include="CircularProgressBar.nuspec" />
+    <None Include="strong-name.snk" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CircularProgressBar.bmp" />
