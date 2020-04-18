@@ -5,30 +5,29 @@
 
 Circular ProgressBar is a custom control and inplace replacement of 'ProgressBar' for WinForm with animation.
 
-## WHERE TO FIND
+## Where to get
 [![](https://img.shields.io/nuget/dt/CircularProgressBar.svg?style=flat-square)](https://www.nuget.org/packages/CircularProgressBar)
 [![](https://img.shields.io/nuget/v/CircularProgressBar.svg?style=flat-square)](https://www.nuget.org/packages/CircularProgressBar)
 
 This library is available as a NuGet package at [nuget.org](https://www.nuget.org/packages/CircularProgressBar/).
 
-## DONATION
-Donations assist development and are greatly appreciated; also always remember that [every coffee counts!](https://media.makeameme.org/created/one-simply-does-i9k8kx.jpg) :)
+## Help me fund my own Death Star
 
-[![](https://img.shields.io/badge/fiat-PayPal-8a00a3.svg?style=flat-square)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=WR3KK2B6TYYQ4&item_name=Donation&currency_code=USD&source=url)
 [![](https://img.shields.io/badge/crypto-CoinPayments-8a00a3.svg?style=flat-square)](https://www.coinpayments.net/index.php?cmd=_donate&reset=1&merchant=820707aded07845511b841f9c4c335cd&item_name=Donate&currency=USD&amountf=20.00000000&allow_amount=1&want_shipping=0&allow_extra=1)
 [![](https://img.shields.io/badge/shetab-ZarinPal-8a00a3.svg?style=flat-square)](https://zarinp.al/@falahati)
+[![](https://img.shields.io/badge/usd-Paypal-8a00a3.svg?style=flat-square)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ramin.graphix@gmail.com&lc=US&item_name=Donate&no_note=0&cn=&curency_code=USD&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHosted)
 
 **--OR--**
 
 You can always donate your time by contributing to the project or by introducing it to others.
 
-## HOW TO USE
+## How to use
 Use toolbox to add the control to your forms.
 
 Check the 'CircularProgressBarSample' project for tons of usage examples.
 ![Screenshot](/screenshot.gif?raw=true "Screenshot")
 
-## MEMBERS
+## Documentation
 #### [Properties]
 
 * `CircularProgressBar.Maximum`: Shows and changes the maximum acceptable value for the progress bar.
@@ -59,10 +58,10 @@ Check the 'CircularProgressBarSample' project for tons of usage examples.
 * `CircularProgressBar.OuterMargin`: Margin of the outer circle.
 
 
-## LICENSE
+## License
 The MIT License (MIT)
 
-Copyright (c) 2016 Soroush Falahati
+Copyright (c) 2016-2020 Soroush Falahati
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
