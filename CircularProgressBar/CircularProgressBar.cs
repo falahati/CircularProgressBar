@@ -18,17 +18,11 @@ namespace CircularProgressBar
     {
         private readonly Animator _animator;
         private int? _animatedStartAngle;
-
         private float? _animatedValue;
-
         private AnimationFunctions.Function _animationFunction;
-
         private Brush _backBrush;
-
         private KnownAnimationFunctions _knownAnimationFunction;
-
         private ProgressBarStyle? _lastStyle;
-
         private int _lastValue;
 
         /// <summary>
@@ -41,7 +35,9 @@ namespace CircularProgressBar
                 ControlStyles.AllPaintingInWmPaint |
                 ControlStyles.UserPaint |
                 ControlStyles.OptimizedDoubleBuffer |
-                ControlStyles.ResizeRedraw, true);
+                ControlStyles.ResizeRedraw,
+                true
+            );
 
             _animator = DesignMode ? null : new Animator();
             AnimationFunction = KnownAnimationFunctions.Liner;
@@ -529,7 +525,7 @@ namespace CircularProgressBar
                         new SolidBrush(ProgressColor),
                         ToRectangle(new RectangleF(point, size)),
                         _animatedStartAngle ?? StartAngle,
-                        (_animatedValue ?? Value) / (Maximum - Minimum) * 360);
+                        ((_animatedValue ?? Value) - Minimum) / (Maximum - Minimum) * 360);
 
                     if (ProgressWidth >= 0)
                     {
