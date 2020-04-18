@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net4</TargetFrameworks>
     <PackageId>CircularProgressBar</PackageId>
-    <Version>2.7.0.7</Version>
+    <Version>2.8.0.16</Version>
     <Authors>Soroush Falahati</Authors>
     <Description>Circular ProgressBar is a custom control for WinForm with animation.</Description>
     <PackageLicenseUrl>https://github.com/falahati/CircularProgress/blob/master/LICENSE</PackageLicenseUrl>
@@ -51,5 +51,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <OutputPath>..\Release</OutputPath>
     <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net4|AnyCPU'">
+    <DocumentationFile>..\Release\CircularProgressBar.xml</DocumentationFile>
   </PropertyGroup>
 </Project>
